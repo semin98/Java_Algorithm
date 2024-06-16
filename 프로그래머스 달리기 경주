@@ -1,0 +1,25 @@
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public String[] solution(String[] players, String[] callings) {
+        Map<String, Integer> point = new HashMap<>();
+
+        for (int i = 0; i < players.length; i++){
+            point.put(players[i], i);
+        }
+
+        for (String p : callings){
+            int rank = point.get(p);
+            String before = players[rank - 1];
+
+            players[rank - 1] = p;
+            players[rank] = before;
+
+            point.put(p, rank - 1);
+            point.put(before, rank);
+        }
+        return players;
+
+    }
+}
