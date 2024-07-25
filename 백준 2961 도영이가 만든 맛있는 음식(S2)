@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Main{
+    static int N;
+    static int[] s;
+    static int[] b;
+    static int ans;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ans = 100000000; // 최솟값 찾는 문제이니 최대한 큰값으로 미리 설정
+        N = sc.nextInt();
+        s = new int[N];
+        b = new int[N];
+
+        for(int i = 0; i < N; i++){
+            s[i] = sc.nextInt();
+            b[i] = sc.nextInt();
+        }
+
+        for(int j = 1; j <= N; j++){
+            brute(0, 1,0,j,0);
+        }
+        System.out.println(ans);
+    }
+
+    static void brute(int idx, int total_s, int total_b, int cnt, int tmp){ 
+// 신맛은 곱, 쓴맛은 합이니 신맛은 0으로 곱하면 안되니 1로 초기화 & cnt(음식 수)가 tmp(택한 음식 수) 같을 때 까지 반복
+        if(tmp == cnt){
+            ans = Math.min(Math.abs(total_b - total_s), ans);
+            return;
+        }
+        if(idx == N) return;
+
+        brute(idx + 1, total_s * s[idx], total_b + b[idx], cnt , tmp + 1);
+        brute(idx + 1, total_s, total_b, cnt, tmp);
+
+    }
+}
