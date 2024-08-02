@@ -2,7 +2,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main1 {
+public class Main {
     static int N, M, V;
     static boolean[][] adj;
     static boolean[] visit;
