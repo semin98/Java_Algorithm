@@ -1,0 +1,68 @@
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main1 {
+    static int N, M, V;
+    static boolean[][] adj;
+    static boolean[] visit;
+    static StringBuilder sb; // DFS 탐색시 재귀 함수에서 방문처리 해야해서 스트링 이어붙일 때 메소드 밖에 있어야 편함.
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        N = sc.nextInt();
+        M = sc.nextInt();
+        V = sc.nextInt();
+
+        adj = new boolean[N + 1][N + 1];
+
+        for(int m = 0; m < M; m++){
+            int v1 = sc.nextInt();
+            int v2 = sc.nextInt();
+
+            adj[v1][v2] = true;
+            adj[v2][v1] = true;
+        }
+
+        visit = new boolean[N + 1];
+        sb = new StringBuilder(); // 방문 할때마다 여기 기록
+        dfs(V);
+        System.out.println(sb.toString());
+
+        // bfs 탐색 출발을 위해 리셋
+        visit = new boolean[N + 1];
+        sb = new StringBuilder();
+        bfs(V);
+        System.out.println(sb.toString());
+    }
+
+    public static void bfs(int start){
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(start); // queue가 곧 방문 스케줄
+        visit[start] = true;
+
+        while(!queue.isEmpty()){
+            int now = queue.poll();
+            sb.append(now + " ");
+
+            for(int next = 1; next <= N; next++){
+                if(adj[now][next] && !visit[next]){
+                    queue.add(next);
+                    visit[next] = true;
+                }
+            }
+        }
+    }
+
+    public static void dfs(int now){
+        visit[now] = true;
+        sb.append(now + " "); // 결과에 보여줄 방문 처리
+
+        for(int next = 1; next <= N; next++){
+            if(adj[now][next] && !visit[next]){
+                dfs(next);
+            }
+        }
+    }
+}
