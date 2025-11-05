@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.stream.Stream;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for(int i = 0; i < N; i++) {
+            int input = Integer.parseInt(br.readLine());
+            list.add(input);
+        }
+
+        Collections.sort(list);
+
+        // 산술평균
+        Double result = 0.0;
+        for (Integer i : list) {
+            result += i;
+        }
+        System.out.println(Math.round(result / N));
+
+        // 중앙값
+        System.out.println(list.get((N - 1) / 2));
+
+        // 최빈값
+        Map<Integer, Integer> map = new HashMap<>();
+        for(Integer i : list) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        List<Map.Entry<Integer, Integer>> entryList = new ArrayList<>(map.entrySet());
+        entryList.sort((a, b) -> b.getValue() - a.getValue());
+
+        if (entryList.size() > 1 && entryList.get(0).getValue().equals(entryList.get(1).getValue())) {
+            List<Integer> modes = new ArrayList<>();
+            int maxFrequency = entryList.get(0).getValue();
+            for (Map.Entry<Integer, Integer> entry : entryList) {
+                if(entry.getValue() == maxFrequency) {
+                    modes.add(entry.getKey());
+                }
+            }
+
+            Collections.sort(modes);
+            System.out.println(modes.get(1));
+        } else {
+            System.out.println(entryList.get(0).getKey());
+        }
+
+
+        // 범위
+        System.out.println(list.get(N - 1) - list.get(0));
+    }
+}
