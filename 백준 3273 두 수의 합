@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+import java.util.stream.Stream;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        int[] arr = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        for(int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(arr);
+
+        int goal = Integer.parseInt(br.readLine());
+        int start = 0;
+        int end = N - 1;
+        long cnt = 0;
+
+        while (start < end) {
+            if (arr[start] + arr[end] == goal) cnt++;
+            if (arr[start] + arr[end] <= goal) start++;
+            else end--;
+        }
+
+        System.out.println(cnt);
+    }
+}
